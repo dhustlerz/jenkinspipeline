@@ -46,7 +46,7 @@ pipeline {
         }
         post {
                 always {
-                    echo 'I will always say Hello again!'
+                     slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
                 }
             }
 }
