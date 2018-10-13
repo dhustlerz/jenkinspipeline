@@ -44,7 +44,7 @@ pipeline {
                 }
             }
         }
-    } catch {
+    } catch(e) {
         // mark build as failed
         currentBuild.result = "FAILURE";
 
