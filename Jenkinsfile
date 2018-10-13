@@ -45,7 +45,7 @@ pipeline {
             }
         }
     } catch(e) {
-        // mark build as failed
+        // mark build as fail
         currentBuild.result = "FAILURE";
 
         // send slack notification
