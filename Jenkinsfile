@@ -1,6 +1,5 @@
 pipeline {
      agent any
-        try {
 
 
         tools {
@@ -45,15 +44,9 @@ pipeline {
                 }
             }
         }
-    } catch(e) {
-        // mark build as fail
-        currentBuild.result = "FAILURE";
-
-        // send slack notification
-        slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-
-        // throw the error
-        throw e;
-
-    }
+        post {
+                always {
+                    echo 'I will always say Hello again!'
+                }
+            }
 }
