@@ -1,7 +1,8 @@
 pipeline {
+     agent any
         try {
 
-        agent any
+
         tools {
                 maven 'localMaven'
             }
