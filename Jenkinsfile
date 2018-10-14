@@ -1,15 +1,12 @@
 pipeline {
-     agent any
+     agent {
+     dockerfile true
+     }
 
 
         tools {
                 maven 'localMaven'
             }
-
-        parameters {
-             string(name: 'tomcat_dev', defaultValue: '52.40.117.39', description: 'Staging Server')
-             string(name: 'tomcat_prod', defaultValue: '54.213.176.113', description: 'Production Server')
-        }
 
         triggers {
              pollSCM('* * * * *') // Polling Source Control
@@ -18,31 +15,12 @@ pipeline {
     stages{
             stage('Build'){
                 steps {
-                    sh 'mvn clean package'
+                    echo 'building'
                 }
-                post {
-                    success {
-                        echo 'Now Archiving...'
-                        archiveArtifacts artifacts: '**/target/*.war'
-                    }
-                }
+
             }
 
-            stage ('Deployments'){
-                parallel{
-                    stage ('Deploy to Staging'){
-                        steps {
-                            sh "scp -i /Users/User/Public/AWS/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat8/webapps"
-                        }
-                    }
 
-                    stage ("Deploy to Production"){
-                        steps {
-                            sh "scp -i /Users/User/Public/AWS/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat8/webapps"
-                        }
-                    }
-                }
-            }
         }
         post {
                 always {
