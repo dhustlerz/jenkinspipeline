@@ -3,15 +3,6 @@ pipeline {
      dockerfile true
      }
 
-
-        tools {
-                maven 'localMaven'
-            }
-
-        triggers {
-             pollSCM('* * * * *') // Polling Source Control
-         }
-
     stages{
             stage('Build'){
                 steps {
